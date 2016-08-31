@@ -19,9 +19,9 @@ namespace FileProcessingService
 		private CancellationTokenSource tokenSource;
 		private AutoResetEvent newFileEvent;
 
-		Document document;
-		Section section;
-		PdfDocumentRenderer pdfRender;
+		private Document document;
+		private Section section;
+		private PdfDocumentRenderer pdfRender;
 
 		public FileService(string inDir, string outDir, string tempDir)
 		{
@@ -67,10 +67,11 @@ namespace FileProcessingService
 					if (IsValidFormat(fileName))
 					{
 						var imageIndex = GetIndex(fileName);
-						if (imageIndex != currentImageIndex + 1 && currentImageIndex != -1)
+						if (imageIndex != currentImageIndex + 1 && currentImageIndex != -1 && nextPageWaiting)
 						{
 							SaveDocument();
 							CreateNewDocument();
+							nextPageWaiting = false;
 						}
 
 						if (TryOpen(file, 3))
