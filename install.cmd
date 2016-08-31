@@ -1,0 +1,1 @@
+.\FileProcessingService\bin\Debug\FileProcessingService.exe install
